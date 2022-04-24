@@ -1,13 +1,17 @@
 using Challenge;
+using Challenge.Services.Config;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-builder.Services.AddHttpClient();
+services.AddHttpClient();
 
-builder.Services.AddControllers();
+services.AddControllers();
 
-builder.Services.AddDbContext<ChallengeContext>();
+services.AddSingleton<IEnvironenmentConfigs, EnvironmentConfigs>();
+
+services.AddDbContext<ChallengeContext>();
 
 //builder.Services.AddEndpointsApiExplorer();
 
@@ -35,7 +39,7 @@ app.MapControllers();
 
 //app.MapGet("/", () => "Hello World!");
 
-app.Run("http://localhost:5000");
+app.Run("http://0.0.0.0:5000");
 
 static void ApplyMigrations(WebApplication app)
 {

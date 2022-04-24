@@ -12,3 +12,14 @@ services:
             MARIADB_USER: challengeuser
             MARIADB_PASSWORD: challengepassword
             TZ: Europe/Lisbon
+    backend:
+        image: challenge/backend
+        build:
+            context: ./projects/Challenge
+            dockerfile: Dockerfile
+        ports:
+            - "5000:5000"
+        environment:
+            connectionString: server=mariadb; port=3306; database=challenge; user=root; password=root
+        depends_on:
+            - mariadb
