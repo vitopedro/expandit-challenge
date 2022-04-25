@@ -6,8 +6,9 @@ import { ChallengeApi } from "./ChallengeApi";
 @Injectable()
 export class ContactsService extends ChallengeApi {
 
-    public getAll(page: number = 0, search:{[param:string]:string} = {}): Promise<PaginatorDTO<Contact>> {
+    public getAll(page: number = 0, search:{[param:string]:string} = {}, order: string = 'asc'): Promise<PaginatorDTO<Contact>> {
         search['currentPage'] = page.toString();
+        search['order'] = order;
         return this.get<PaginatorDTO<Contact>>("/contacts", search);
     }
 

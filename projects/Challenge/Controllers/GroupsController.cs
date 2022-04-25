@@ -23,15 +23,27 @@ namespace Challenge.Controllers
         // GET: /groups
         [HttpGet]
         public async Task<ActionResult<Pagination<IEnumerable<GroupDTO>>>> GetAll(
+            [FromQuery] string? name = null,
             [FromQuery] int pageLimit = 10,
-            [FromQuery] int currentPage = 0
+            [FromQuery] int currentPage = 0,
+            [FromQuery] string? order = "asc"
         )
         {
             var query = _context.Groups
                 .Include(g => g.ContactGroups)
                 .ThenInclude(cg => cg.Contact);
 
-            var results = await query.Select(g => new GroupDTO(g)).ToListAsync();
+            var results = query.Select(g => new GroupDTO(g)).AsEnumerable<GroupDTO>();
+
+            if (!string.IsNullOrEmpty(name)) {
+                results = results.Where(g => g.Name.ToLower().Contains(name));
+            }
+
+            if (order == "desc") {
+                results = results.OrderByDescending(c => c.Name);
+            } else {
+                results = results.OrderBy(c => c.Name);
+            }
 
             var paginationHelper = new PaginationHelper<GroupDTO>(results, currentPage, pageLimit);
 

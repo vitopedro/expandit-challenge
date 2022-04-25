@@ -15,6 +15,8 @@ export class ContactsListComponent implements OnInit {
 
   public contacts: PaginatorDTO<Contact> = emptyPaginator;
   public currentPage = 0;
+  public order = "asc";
+  public orderLabel = "Ascendente";
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -33,7 +35,7 @@ export class ContactsListComponent implements OnInit {
   }
 
   public async search():Promise<void> {
-    this.contacts = await this.contactsService.getAll(this.currentPage, this.form.value);
+    this.contacts = await this.contactsService.getAll(this.currentPage, this.form.value, this.order);
     this.currentPage = this.contacts.currentPage;
   }
 
@@ -53,5 +55,16 @@ export class ContactsListComponent implements OnInit {
 
   public new() {
     this.router.navigate([`contact/create`]);
+  }
+
+  public changeOrder() {
+    if (this.order == 'asc') {
+      this.order = 'desc';
+      this.orderLabel = 'Descendente';
+    } else {
+      this.order = 'asc';
+      this.orderLabel = 'Ascendente';
+    }
+    this.search();
   }
 }

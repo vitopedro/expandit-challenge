@@ -15,6 +15,8 @@ export class GroupsListComponent implements OnInit {
 
   public groups: PaginatorDTO<Group> = emptyPaginator;
   public currentPage = 0;
+  public order = "asc";
+  public orderLabel = "Ascendente";
 
   public form: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -32,7 +34,7 @@ export class GroupsListComponent implements OnInit {
   }
 
   public async search(): Promise<void> {
-    this.groups = await this.groupsService.getAll(this.currentPage, this.form.value);
+    this.groups = await this.groupsService.getAll(this.currentPage, this.form.value, this.order);
     this.currentPage = this.groups.currentPage;
   }
 
@@ -52,5 +54,16 @@ export class GroupsListComponent implements OnInit {
 
   public new() {
     this.router.navigate([`group/create`]);
+  }
+
+  public changeOrder() {
+    if (this.order == 'asc') {
+      this.order = 'desc';
+      this.orderLabel = 'Descendente';
+    } else {
+      this.order = 'asc';
+      this.orderLabel = 'Ascendente';
+    }
+    this.search();
   }
 }

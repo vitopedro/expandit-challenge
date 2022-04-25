@@ -34,7 +34,12 @@
 <table class="table">
     <thead>
         <tr class="table-primary">
-            <th>Contactos</th>
+            <th>
+                <div class="float-start">Contactos</div>
+                <div class="float-end">
+                    <button type="button" (click)="changeOrder()" class="btn btn-secondary">{{ orderLabel }}</button>
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>

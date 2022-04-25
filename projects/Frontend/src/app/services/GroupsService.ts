@@ -6,8 +6,9 @@ import { ChallengeApi } from "./ChallengeApi";
 @Injectable()
 export class GroupsService extends ChallengeApi {
 
-    public getAll(page: number = 0, search:{[param:string]:string} = {}): Promise<PaginatorDTO<Group>> {
+    public getAll(page: number = 0, search:{[param:string]:string} = {}, order: string = 'asc'): Promise<PaginatorDTO<Group>> {
         search['currentPage'] = page.toString();
+        search['order'] = order;
         return this.get<PaginatorDTO<Group>>("/groups", search);
     }
 

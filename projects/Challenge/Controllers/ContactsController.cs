@@ -44,7 +44,17 @@ namespace Challenge.Controllers
             }
 
             /*if (!string.IsNullOrEmpty(number)) {
-                results = results.Where(c => c.PhoneNumbers);
+                var phoneNumberIds = _context.PhoneNumbers
+                    .Where(pn => pn.Number.Contains(number))
+                    .Select(pn => pn.Id)
+                    .AsEnumerable<long>();
+
+                if (phoneNumberIds.Count() == 0) {
+                    var paginationHelperEmpty = new PaginationHelper<ContactDTO>(new List<ContactDTO>(), currentPage, pageLimit);
+                    return new OkObjectResult(paginationHelperEmpty.GetPagination());
+                }
+
+                results = results.Where(c => c.PhoneNumbers.Select(pn => pn.));
             }*/
 
             if (order == "desc") {
