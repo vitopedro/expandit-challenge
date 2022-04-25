@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <label for="contacts">Contactos</label>
+            <label for="contacts">Contactos:</label>
             <span *ngIf="addedContactIds.length == 0"><i>Não foram adicionados contactos, por favor adicione contactos</i></span>
             <ul>
                 <li *ngFor="let c of addedContacts">{{ c.name }}</li>

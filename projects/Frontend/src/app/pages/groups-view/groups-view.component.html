@@ -5,10 +5,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">Contactos:</div>
-        <ul>
-            <li *ngFor="let contact of group.contacts">{{ contact.name }}</li>
-        </ul>
+        <div class="col-md-12">
+            <label for="contacts">Contactos:</label>
+            <span *ngIf="group.contacts.length == 0"><i>Não existem contactos neste grupo</i></span>
+            <ul>
+                <li *ngFor="let contact of group.contacts">{{ contact.name }}</li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">

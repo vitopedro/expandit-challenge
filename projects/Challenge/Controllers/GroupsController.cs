@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Challenge.Models;
 using Challenge.DTOs;
 using Challenge.Helpers.Pagination;
+using Challenge.Interfaces;
 
 namespace Challenge.Controllers
 {
@@ -13,11 +11,11 @@ namespace Challenge.Controllers
     [ApiController]
     public class GroupsController : ControllerBase
     {
-        private readonly ChallengeContext _context;
+        private readonly IGroupsRepository _repository;
 
-        public GroupsController(ChallengeContext context)
+        public GroupsController(IGroupsRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: /groups
@@ -29,106 +27,87 @@ namespace Challenge.Controllers
             [FromQuery] string? order = "asc"
         )
         {
-            var query = _context.Groups
-                .Include(g => g.ContactGroups)
-                .ThenInclude(cg => cg.Contact);
+            //try
+            //{
+                var results = _repository.GetAll(
+                    name,
+                    pageLimit,
+                    currentPage,
+                    order
+                );
 
-            var results = query.Select(g => new GroupDTO(g)).AsEnumerable<GroupDTO>();
-
-            if (!string.IsNullOrEmpty(name)) {
-                results = results.Where(g => g.Name.ToLower().Contains(name));
-            }
-
-            if (order == "desc") {
-                results = results.OrderByDescending(c => c.Name);
-            } else {
-                results = results.OrderBy(c => c.Name);
-            }
-
-            var paginationHelper = new PaginationHelper<GroupDTO>(results, currentPage, pageLimit);
-
-            return new OkObjectResult(paginationHelper.GetPagination());
+                return new OkObjectResult(results);
+            /*}
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }*/
         }
 
         // GET: /groups/ID
         [HttpGet("{id}")]
         public async Task<ActionResult<GroupDTO>> GetOne(long id)
         {
-            var result = await _context.Groups
-                .Include(g => g.ContactGroups)
-                .ThenInclude(cg => cg.Contact)
-                .Where(g => g.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (result == null) {
+            try
+            {
+                var result = await _repository.GetOne(id);
+                if (result == null) {
+                    return NotFound();
+                }
+                return new OkObjectResult(result);
+            }
+            catch (System.Exception)
+            {
                 return NotFound();
             }
-
-            return new OkObjectResult(new GroupDTO(result));
         }
 
         // POST: /groups
         [HttpPost]
         public async Task<ActionResult<GroupDTO>> CreateOne([FromBody] GroupFormDTO groupFormDTO)
         {
-            var group = new Group
+            try
             {
-                Name = groupFormDTO.Name,
-                ContactGroups = groupFormDTO.Contacts.Select(
-                    c => new ContactGroup{
-                        ContactId = c.Id
-                    }
-                ).ToList<ContactGroup>()
-            };
-
-            _context.Groups.Add(group);
-            var saved = await _context.SaveChangesAsync();
-
-            if (saved <= 0) {
-                return new UnprocessableEntityResult();
+                var group = await _repository.CreateOne(groupFormDTO);
+                return new OkObjectResult(group);
             }
-
-            return await this.GetOne(group.Id);
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         // PUT: /groups/ID
         [HttpPut("{id}")]
         public async Task<ActionResult<GroupDTO>> UpdateOne(long id, GroupFormDTO groupFormDTO)
         {
-            var group = await _context.Groups
-                .Include(g => g.ContactGroups)
-                .Where(g => g.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (group == null) {
-                return new NotFoundResult();
-            }
-
-            group.Name = groupFormDTO.Name;
-            group.ContactGroups = groupFormDTO.Contacts.Select(
-                c => new ContactGroup{
-                    ContactId = c.Id
+            try
+            {
+                var group = await _repository.UpdateOne(id, groupFormDTO);
+                if (group == null) {
+                    return NotFound();
                 }
-            ).ToList<ContactGroup>();
-
-            await _context.SaveChangesAsync();
-
-            return await this.GetOne(id);
+                return new OkObjectResult(group);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         // DELETE: /groups/ID
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOne(long id)
         {
-            var group = await _context.Groups.FindAsync(id);
-            if (group == null) {
-                return NotFound();
+            try
+            {
+                await _repository.DeleteOne(id);
+                return NoContent();
             }
-
-            _context.Groups.Remove(group);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }
