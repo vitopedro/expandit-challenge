@@ -14,6 +14,8 @@ import { ChallengeApi } from './services/ChallengeApi';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactsViewComponent } from './pages/contacts-view/contacts-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GroupsService } from './services/GroupsService';
+import { GroupsViewComponent } from './pages/groups-view/groups-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     GroupsListComponent,
     GroupsFormComponent,
     MenuComponent,
-    ContactsViewComponent
+    ContactsViewComponent,
+    GroupsViewComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     ContactsService,
+    GroupsService,
   ],
   bootstrap: [AppComponent]
 })

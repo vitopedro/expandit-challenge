@@ -1,1 +1,72 @@
-<p>groups-form works!</p>
+<div class="row">
+    <div class="col-md-12">
+        <h3 *ngIf="group">Editar {{ group.name }}</h3>
+        <h3 *ngIf="!group">Novo Grupo</h3>
+    </div>
+</div>
+
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label for="contacts">Contactos</label>
+            <span *ngIf="addedContactIds.length == 0"><i>Não foram adicionados contactos, por favor adicione contactos</i></span>
+            <ul>
+                <li *ngFor="let c of addedContacts">{{ c.name }}</li>
+            </ul>
+        </div>
+    </div>
+</form>
+
+<div class="row" [formGroup]="formContact">
+    <div class="col-sm-9">
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" formControlName="name">
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" (click)="initContacts()" class="btn btn-primary">Pesquisar</button>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr class="table-primary">
+            <th>Nome</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let contact of contacts.data">
+            <td>{{ contact.name }}</td>
+            <td>
+                <button type="button" *ngIf="!addedContactIds.includes(contact.id)" (click)="addContact(contact)" class="btn btn-secondary">Adicionar</button>
+                <button type="button" *ngIf="addedContactIds.includes(contact.id)" disabled class="btn btn-secondary">Adicionar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" *ngIf="contactsCurrentPage != 0" (click)="previousContact()" class="btn btn-primary float-start">Anterior</button>
+        <button type="button" *ngIf="contactsCurrentPage == 0" disabled class="btn btn-primary float-start">Anterior</button>
+        <button type="button" *ngIf="contactsCurrentPage < contacts.numOfPages - 1" (click)="nextContact()" class="btn btn-primary float-end">Próximo</button>
+        <button type="button" *ngIf="contactsCurrentPage >= contacts.numOfPages - 1" disabled class="btn btn-primary float-end">Próximo</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" (click)="submit()" class="btn btn-primary">Guardar</button>
+        <button type="button" (click)="cancel()" class="btn btn-secondary">Cancelar</button>
+    </div>
+</div>

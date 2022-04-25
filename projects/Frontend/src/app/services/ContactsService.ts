@@ -7,7 +7,6 @@ import { ChallengeApi } from "./ChallengeApi";
 export class ContactsService extends ChallengeApi {
 
     public getAll(page: number = 0, search:{[param:string]:string} = {}): Promise<PaginatorDTO<Contact>> {
-        //return this.challengeApi.get<PaginatorDTO<Contact>>("/contacts");
         search['currentPage'] = page.toString();
         return this.get<PaginatorDTO<Contact>>("/contacts", search);
     }
@@ -22,5 +21,9 @@ export class ContactsService extends ChallengeApi {
 
     public updateOne(id: number, contact: Contact): Promise<Contact> {
         return this.put<Contact>(`/contacts/${id}`, contact);
+    }
+
+    public deleteOne(id: number): Promise<void> {
+        return this.delete<void>(`/contacts/${id}`);
     }
 }

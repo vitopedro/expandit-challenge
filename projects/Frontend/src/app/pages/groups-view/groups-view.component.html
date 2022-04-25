@@ -1,0 +1,21 @@
+<div *ngIf="group">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{{ group.name }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">Contactos:</div>
+        <ul>
+            <li *ngFor="let contact of group.contacts">{{ contact.name }}</li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" (click)="edit()">Editar</button>
+            <button type="button" class="btn btn-danger" (click)="delete()">Apagar</button>
+            <button type="button" class="btn btn-secondary" (click)="back()">Voltar</button>
+        </div>
+    </div>
+</div>

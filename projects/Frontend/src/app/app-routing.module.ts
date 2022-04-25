@@ -6,6 +6,7 @@ import { ContactsListComponent } from './pages/contacts-list/contacts-list.compo
 import { ContactsViewComponent } from './pages/contacts-view/contacts-view.component';
 import { GroupsFormComponent } from './pages/groups-form/groups-form.component';
 import { GroupsListComponent } from './pages/groups-list/groups-list.component';
+import { GroupsViewComponent } from './pages/groups-view/groups-view.component';
 
 const routes: Routes = [
   {path: '', component: MainLayoutComponent, children: [
@@ -16,6 +17,7 @@ const routes: Routes = [
     {path: 'groups', component: GroupsListComponent},
     {path: 'group/create', component: GroupsFormComponent},
     {path: 'group/update/:id', component: GroupsFormComponent},
+    {path: 'group/view/:id', component: GroupsViewComponent},
     //Wildcard
     {path: '**', redirectTo: 'contacts'}
   ]},

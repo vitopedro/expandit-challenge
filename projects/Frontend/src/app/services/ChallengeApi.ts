@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from "rxjs";
+import { last, lastValueFrom } from "rxjs";
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -38,12 +38,13 @@ export abstract class ChallengeApi {
         });
     }
 
-      /*public delete<T>(endpoint:string, extraHeaders?:{[headerName:string]:string}, useLoader:boolean = true):Promise<T>{
-          this.loadingService.isLoading = useLoader;
-          return this.httpClient.delete<T>(`${this.host}${endpoint}`, {headers: this.getCustomHeaders(extraHeaders)})
-          .pipe(catchError(this.handleError<T>()))
-          .toPromise<T>().finally(this.stopLoading.bind(this));
-      }*/
+    public delete<T>(endpoint:string):Promise<T>{
+        let request = this.httpClient.delete<T>(`${this.host}${endpoint}`);
+
+        return lastValueFrom(request).then(res => {
+            return res;
+        })
+    }
 
     private getQueryString(params?:{[param:string]:string}):string{
         if(!params){

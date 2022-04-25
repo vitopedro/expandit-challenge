@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { emptyPaginator } from 'src/app/models/dtos/emptyPaginator';
+import { PaginatorDTO } from 'src/app/models/dtos/PaginatorDTO';
+import { Group } from 'src/app/models/Group';
+import { GroupsService } from 'src/app/services/GroupsService';
 
 @Component({
   selector: 'app-groups-list',
@@ -7,9 +13,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupsListComponent implements OnInit {
 
-  constructor() { }
+  public groups: PaginatorDTO<Group> = emptyPaginator;
+  public currentPage = 0;
+
+  public form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    contact: new FormControl('')
+  });
+
+  constructor(
+    private groupsService: GroupsService,
+    private router: Router
+  ) {
+    this.search();
+  }
 
   ngOnInit(): void {
   }
 
+  public async search(): Promise<void> {
+    this.groups = await this.groupsService.getAll(this.currentPage, this.form.value);
+    this.currentPage = this.groups.currentPage;
+  }
+
+  public view(id: number): void {
+    this.router.navigate([`group/view/${id}`]);
+  }
+
+  public next() {
+    this.currentPage++;
+    this.search();
+  }
+
+  public previous() {
+    this.currentPage--;
+    this.search();
+  }
+
+  public new() {
+    this.router.navigate([`group/create`]);
+  }
 }

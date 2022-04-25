@@ -43,6 +43,18 @@ export class ContactsViewComponent implements OnInit {
     this.router.navigate(['/contacts']);
   }
 
+  public delete(): void {
+    if (!confirm("Tem a certeza que quer apagar este contacto? este processo é irreversível")) {
+      return;
+    }
+
+    this.contactService.deleteOne(this.contactId);
+
+    alert("contacto eliminado");
+
+    this.router.navigate(['/contacts']);
+  }
+
   ngOnInit(): void {
   }
 
