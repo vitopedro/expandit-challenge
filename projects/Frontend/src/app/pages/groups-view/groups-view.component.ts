@@ -12,6 +12,7 @@ export class GroupsViewComponent implements OnInit {
 
   private groupId: number = 0;
   public group?: Group;
+  public mailTo: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +27,15 @@ export class GroupsViewComponent implements OnInit {
 
   private async initGroup(): Promise<void> {
     this.group = await this.groupsService.getOne(this.groupId);
+    this.setMailTo();
+  }
+
+  private setMailTo(): void {
+    if (this.group == null) {
+      return;
+    }
+
+    this.mailTo = this.group.contacts.map(c => c.email).join(',');
   }
 
   public edit(): void {

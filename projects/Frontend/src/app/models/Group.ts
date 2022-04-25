@@ -9,4 +9,5 @@ export interface Group {
 export interface ContactMinimal {
     id: number;
     name: string;
+    email?: string;
 }

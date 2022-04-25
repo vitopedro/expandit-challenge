@@ -32,7 +32,16 @@ export class ContactsViewComponent implements OnInit {
   }
 
   private setInitials(): void {
-    this.initials = "PV";
+    if (this.contact == null) {
+      return;
+    }
+    let names = this.contact.name.split(" ");
+
+    this.initials += names[0].charAt(0).toUpperCase();
+
+    if (names.length > 1) {
+      this.initials += names[names.length - 1].charAt(0).toUpperCase();
+    }
   }
 
   public edit(): void {

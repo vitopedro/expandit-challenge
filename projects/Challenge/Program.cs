@@ -20,24 +20,17 @@ services.AddCors();
 
 services.AddSingleton<IEnvironenmentConfigs, EnvironmentConfigs>();
 
-//
+// adds repositories
 services.AddScoped<IContactsRepository, ContactsRepository>();
 services.AddScoped<IGroupsRepository, GroupsRepository>();
 
 services.AddDbContext<ChallengeContext>();
 
-//
+// adds seeds
 services.AddTransient<ContactsSeeder>();
 services.AddTransient<PhoneNumbersSeeder>();
 services.AddTransient<GroupsSeeder>();
 services.AddTransient<ContactGroupsSeeder>();
-
-//builder.Services.AddEndpointsApiExplorer();
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -56,10 +49,6 @@ SeedData(app);
     app.UseSwagger();
     app.UseSwaggerUI();
 }*/
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
 
 app.MapControllers();
 

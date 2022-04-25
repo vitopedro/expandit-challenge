@@ -11,15 +11,29 @@
     </div>
     <div class="row">
         <div class="col-md-12">Números de telefone:</div>
-        <div class="col-sm-4" *ngFor="let number of contact.phoneNumbers">
+        <div class="col-sm-6" *ngFor="let number of contact.phoneNumbers">
             <div class="row">
-                <div class="col-sm-6">{{ number.number }}</div>
-                <div class="col-sm-6">{{ number.label }}</div>
+                <div class="col-sm-4">{{ number.number }}</div>
+                <div class="col-sm-4">{{ number.label }}</div>
+                <div class="col-sm-4">
+                    <a href="tel:{{ number.number }}">
+                        <button type="button" class="btn btn-info">Telefonar</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">Email: {{ contact.email }}</div>
+        <div class="col-md-12">
+            <div class="col-sm-6">
+                Email: {{ contact.email }}
+            </div>
+            <div class="col-sm-6">
+                <a href="mailto:{{ contact.email }}">
+                    <button type="button" class="btn btn-info">Escrever Email</button>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">Morada: {{ contact.address }}</div>
