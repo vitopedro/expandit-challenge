@@ -1,0 +1,17 @@
+.photo {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    border: grey solid;
+    border-radius: 100px;
+    background-color: #cfe2ff;
+    display: flex;
+    align-items: center;
+
+    .initials {
+        text-align: center;
+        width: 100%;
+        font-size: 40px;
+        font-weight: bold;
+    }
+}

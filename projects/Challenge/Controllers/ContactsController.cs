@@ -23,13 +23,35 @@ namespace Challenge.Controllers
         // GET: /contacts
         [HttpGet]
         public async Task<ActionResult<Pagination<IEnumerable<ContactDTO>>>> GetAll(
+            [FromQuery] string? name = null,
+            [FromQuery] string? email = null,
+            [FromQuery] string? number = null,
             [FromQuery] int pageLimit = 10,
-            [FromQuery] int currentPage = 0
+            [FromQuery] int currentPage = 0,
+            [FromQuery] string? order = "asc"
         )
         {
             var query = _context.Contacts.Include(c => c.PhoneNumbers);
 
-            var results = await query.Select(c => new ContactDTO(c)).ToListAsync();
+            var results = query.Select(c => new ContactDTO(c)).AsEnumerable<ContactDTO>();
+
+            if (!string.IsNullOrEmpty(name)) {
+                results = results.Where(c => c.Name.ToLower().Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(email)) {
+                results = results.Where(c => c.Email.ToLower().Contains(email));
+            }
+
+            /*if (!string.IsNullOrEmpty(number)) {
+                results = results.Where(c => c.PhoneNumbers);
+            }*/
+
+            if (order == "desc") {
+                results = results.OrderByDescending(c => c.Name);
+            } else {
+                results = results.OrderBy(c => c.Name);
+            }
 
             var paginationHelper = new PaginationHelper<ContactDTO>(results, currentPage, pageLimit);
 

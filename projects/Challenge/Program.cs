@@ -3,11 +3,17 @@ using Challenge.Services.Config;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var services = builder.Services;
 
 services.AddHttpClient();
 
 services.AddControllers();
+
+//services cors
+services.AddCors();
+// global cors policy
+
 
 services.AddSingleton<IEnvironenmentConfigs, EnvironmentConfigs>();
 
@@ -21,6 +27,12 @@ services.AddDbContext<ChallengeContext>();
 //builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
 
 ApplyMigrations(app);
 
@@ -39,7 +51,8 @@ app.MapControllers();
 
 //app.MapGet("/", () => "Hello World!");
 
-app.Run("http://0.0.0.0:5000");
+//app.Run("http://0.0.0.0:5000");
+app.Run("http://localhost:5000");
 
 static void ApplyMigrations(WebApplication app)
 {

@@ -12,6 +12,8 @@ services:
             MARIADB_USER: challengeuser
             MARIADB_PASSWORD: challengepassword
             TZ: Europe/Lisbon
+
+    # Dot net core 6 backend
     backend:
         image: challenge/backend
         build:
@@ -23,3 +25,14 @@ services:
             connectionString: server=mariadb; port=3306; database=challenge; user=root; password=root
         depends_on:
             - mariadb
+
+    # angular 13 frontend
+    frontend:
+        image: challenge/frontend
+        build:
+            context: ./projects/Frontend
+            dockerfile: Dockerfile
+        ports:
+            - "4000:80"
+        depends_on:
+            - backend

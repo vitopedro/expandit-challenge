@@ -1,0 +1,33 @@
+<div *ngIf="contact">
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngIf="!hasPhoto" class="photo">
+                <div class="initials">{{ initials }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">{{ contact.name }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">Números de telefone:</div>
+        <div class="col-sm-4" *ngFor="let number of contact.phoneNumbers">
+            <div class="row">
+                <div class="col-sm-6">{{ number.number }}</div>
+                <div class="col-sm-6">{{ number.label }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">Email: {{ contact.email }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">Morada: {{ contact.address }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" (click)="edit()">Editar</button>
+            <button type="button" class="btn btn-secondary" (click)="back()">Voltar</button>
+        </div>
+    </div>
+</div>

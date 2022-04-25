@@ -40,6 +40,7 @@ namespace Challenge.Helpers.Pagination
                 this.pagination.PageLimit = 1;
             }
             var possibleNumOfPages = this.data.Count() / this.pagination.PageLimit;
+            this.pagination.NumOfPages = possibleNumOfPages + 1;
 
             if(possibleNumOfPages < currentPage){
                 currentPage = 0;
