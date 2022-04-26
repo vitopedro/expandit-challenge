@@ -1,5 +1,5 @@
 # expandit-challenge
-The repository containing the full application fot the challenge proposed by expandit
+The repository containing the full application for the challenge proposed by expandit
 
 # Develop
 
@@ -10,7 +10,7 @@ In the root of the project there us a docker-compose file and a projects folder.
 **Backend:** If you need to develop the backend use the folder `projects/Challenge`, i would recomend to open it individually, since its easier to run it, I used vs code to develop and run the project but you can use whatever you want. In vs code press f5 and it will recomend configurations to run as a dotnet application. You need to have [dot net core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) installed in order to develop the project.  
 A postman collection is provided in file `Challenge.postman_collection.json` to make it easier to test the application.
 
-**Frontend:** If you need to develop the frontend, use the folder `projects/Frontend`, you dont need to open this folder individually, but you need to place yourself in that folder in a terminal of your choice. I used vs code imbued terminal but you can use whatever you want as long as it can access node and angular cli's. To develop the frontend you will need both [node](https://nodejs.org/en/download/) and [angular] (https://angular.io/guide/setup-local). Once in the correct folder, run `ng s --port 4000`, the port is optional and it defaults to 4200, i just used the same port configured in toe docker-compose file.
+**Frontend:** If you need to develop the frontend, use the folder `projects/Frontend`, you dont need to open this folder individually, but you need to place yourself in that folder in a terminal of your choice. I used vs code imbued terminal but you can use whatever you want as long as it can access node and angular cli's. To develop the frontend you will need both [node](https://nodejs.org/en/download/) and [angular](https://angular.io/guide/setup-local). Once in the correct folder, run `ng s --port 4000`, the port is optional and it defaults to 4200, i just used the same port configured in toe docker-compose file.
 
 
 
