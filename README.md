@@ -48,3 +48,4 @@ This is solvable, i can use a script as an entrypoint to wait for the db to allo
 
 - The file upload is completely missing
 - The frontend can use a better design, this was made this way to show off all functionalities of the challenge and not really taking user experience into consideration
+- There are tests missing due to time constrains and lack my experience in implementing them
