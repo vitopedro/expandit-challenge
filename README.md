@@ -23,7 +23,7 @@ You also will need to have ports 4000 and 5000 available since those are used to
 
 - Place youreself in the root of the project, the folder where file `docker-compose.yml` is, and run `docker-compose up --build`
 
-    - If it's not the first time you run the project, you can use only `docker-compose up` since the images are already created
+    - If it's not the first time you run the project, you can use just `docker-compose up` since the images are already created
 
 - After the build proccess is finished, three containers will be up
 
