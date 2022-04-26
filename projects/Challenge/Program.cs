@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Challenge.Interfaces;
 using Challenge.Repositories;
 using Challenge.Seeds;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +41,26 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials()); // allow credentials
 
-ApplyMigrations(app);
-SeedData(app);
+while (true)
+{
+    try
+    {
+        Console.WriteLine("Trying to run migrations");
+        ApplyMigrations(app);
+        Console.WriteLine("Migrations Successfully ran");
+        Console.WriteLine("Trying to run seeds");
+        SeedData(app);
+        Console.WriteLine("Seeds Successfully ran");
+        break;
+    }
+    catch
+    {
+        Console.WriteLine("Could no apply migrations or seeds");
+        Console.WriteLine("Waiting 2 seconds.............");
+        System.Threading.Thread.Sleep(2000);
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 /*if (app.Environment.IsDevelopment())
@@ -52,8 +71,8 @@ SeedData(app);
 
 app.MapControllers();
 
-//app.Run("http://0.0.0.0:5000");
-app.Run("http://localhost:5000");
+app.Run("http://0.0.0.0:5000");
+//app.Run("http://localhost:5000");
 
 static void ApplyMigrations(WebApplication app)
 {
