@@ -138,6 +138,11 @@ export class GroupsFormComponent implements OnInit {
     this.addedContactIds.push(c.id);
   }
 
+  public removeContact(c: ContactMinimal): void {
+    this.addedContacts = this.addedContacts.filter(con => con.id != c.id);
+    this.addedContactIds = this.addedContactIds.filter(con => con != c.id);
+  }
+
   ngOnInit(): void {
   }
 

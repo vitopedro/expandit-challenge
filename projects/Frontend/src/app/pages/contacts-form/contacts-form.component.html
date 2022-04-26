@@ -46,7 +46,7 @@
                         <input type="text" class="form-control" formControlName="label">
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 button-container">
                     <div class="form-group" *ngIf="i != 0">
                         <button type="button" (click)="removeNumber(i)" class="btn btn-info">x</button>
                     </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row add-button">
         <div class="col-md-12">
             <button type="button" (click)="addNumber()" class="btn btn-info float-end">+</button>
         </div>

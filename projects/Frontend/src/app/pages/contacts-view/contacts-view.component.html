@@ -1,5 +1,5 @@
 <div *ngIf="contact">
-    <div class="row">
+    <div class="row initials-row">
         <div class="col-md-12">
             <div *ngIf="!hasPhoto" class="photo">
                 <div class="initials">{{ initials }}</div>
@@ -7,14 +7,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">{{ contact.name }}</div>
+        <div class="col-md-12">
+            <div class="name">{{ contact.name }}</div>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">Números de telefone:</div>
+        <div class="col-md-12"><b>Números de telefone:</b></div>
         <div class="col-sm-6" *ngFor="let number of contact.phoneNumbers">
             <div class="row">
-                <div class="col-sm-4">{{ number.number }}</div>
-                <div class="col-sm-4">{{ number.label }}</div>
+                <div class="col-sm-4 v-aligned">{{ number.number }}</div>
+                <div class="col-sm-4 v-aligned">{{ number.label }}</div>
                 <div class="col-sm-4">
                     <a href="tel:{{ number.number }}">
                         <button type="button" class="btn btn-info">Telefonar</button>
@@ -24,21 +26,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-sm-6">
-                Email: {{ contact.email }}
-            </div>
-            <div class="col-sm-6">
-                <a href="mailto:{{ contact.email }}">
-                    <button type="button" class="btn btn-info">Escrever Email</button>
-                </a>
-            </div>
+        <div class="col-sm-6 v-aligned">
+            <b>Email: </b> {{ contact.email }}
+        </div>
+        <div class="col-sm-6">
+            <a href="mailto:{{ contact.email }}">
+                <button type="button" class="btn btn-info">Escrever Email</button>
+            </a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">Morada: {{ contact.address }}</div>
+    <div class="row address">
+        <div class="col-md-12 v-aligned"><b>Morada: </b> {{ contact.address }}</div>
     </div>
-    <div class="row">
+    <div class="row bottom-buttons">
         <div class="col-md-12">
             <button type="button" class="btn btn-primary" (click)="edit()">Editar</button>
             <button type="button" class="btn btn-danger" (click)="delete()">Apagar</button>

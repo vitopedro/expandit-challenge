@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <label for="contacts">Contactos:</label>
+            <label for="contacts"><b>Contactos:</b></label>
             <span *ngIf="group.contacts.length == 0"><i>Não existem contactos neste grupo</i></span>
             <ul>
                 <li *ngFor="let contact of group.contacts">{{ contact.name }}</li>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mail-to">
             <a href="mailto:{{ mailTo }}">
                 <button type="button" class="btn btn-info">Ecrever Email</button>
             </a>

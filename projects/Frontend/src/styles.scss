@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+.button-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.bottom-buttons {
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    margin-bottom: 30px;
+}
+
+.list-row:hover {
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+}

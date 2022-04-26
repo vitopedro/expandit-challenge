@@ -74,17 +74,27 @@ export class ContactsFormComponent implements OnInit {
         label: new FormControl('', [Validators.required]),
       })
     );
-    this.form.controls['phoneNumbers'] = new FormArray(this.numbersGroup);
+    this.form = new FormGroup({
+      name: new FormControl(this.form.controls['name'].value, [Validators.required]),
+      email: new FormControl(this.form.controls['email'].value, [Validators.required, Validators.email]),
+      address: new FormControl(this.form.controls['address'].value, [Validators.required]),
+      phoneNumbers: new FormArray(this.numbersGroup),
+    });
   }
 
   public removeNumber(index: number) {
     this.numbersGroup.splice(index, 1);
-    this.form.controls['phoneNumbers'] = new FormArray(this.numbersGroup);
+    this.form = new FormGroup({
+      name: new FormControl(this.form.controls['name'].value, [Validators.required]),
+      email: new FormControl(this.form.controls['email'].value, [Validators.required, Validators.email]),
+      address: new FormControl(this.form.controls['address'].value, [Validators.required]),
+      phoneNumbers: new FormArray(this.numbersGroup),
+    });
   }
 
   public submit() {
     if (this.form.invalid) {
-      alert("Todos os campossão obrigatórios");
+      alert("Todos os campos são obrigatórios");
       return;
     }
 

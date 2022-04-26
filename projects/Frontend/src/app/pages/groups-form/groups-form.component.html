@@ -20,20 +20,28 @@
             <label for="contacts">Contactos:</label>
             <span *ngIf="addedContactIds.length == 0"><i>Não foram adicionados contactos, por favor adicione contactos</i></span>
             <ul>
-                <li *ngFor="let c of addedContacts">{{ c.name }}</li>
+                <li *ngFor="let c of addedContacts">
+                    <div class="row">
+                        <div class="col-md-6">{{ c.name }}</div>
+                        <div class="col-md-6">
+                            <button type="button" (click)="removeContact(c)" class="btn btn-secondary">x</button>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
 </form>
 
-<div class="row" [formGroup]="formContact">
+<div class="row search-bar" [formGroup]="formContact">
+    <div class="col-md-12"><b>Adicionar contactos</b></div>
     <div class="col-sm-9">
         <div class="form-group">
             <label for="name">Nome</label>
             <input type="text" class="form-control" formControlName="name">
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3 button-container">
         <button type="button" (click)="initContacts()" class="btn btn-primary">Pesquisar</button>
     </div>
 </div>
@@ -55,7 +63,7 @@
         </tr>
     </tbody>
 </table>
-<div class="row">
+<div class="row bottom-buttons">
     <div class="col-md-12">
         <button type="button" *ngIf="contactsCurrentPage != 0" (click)="previousContact()" class="btn btn-primary float-start">Anterior</button>
         <button type="button" *ngIf="contactsCurrentPage == 0" disabled class="btn btn-primary float-start">Anterior</button>
@@ -64,7 +72,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row bottom-buttons">
     <div class="col-md-12">
         <button type="button" (click)="submit()" class="btn btn-primary">Guardar</button>
         <button type="button" (click)="cancel()" class="btn btn-secondary">Cancelar</button>
